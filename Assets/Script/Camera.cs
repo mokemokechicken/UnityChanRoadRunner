@@ -6,7 +6,10 @@ public class Camera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		target = GameObject.FindWithTag("Player").transform;
+		//target = GameObject.FindWithTag("Player").transform;
+		foreach(GameObject go in GameObject.FindGameObjectsWithTag("Player")) {
+			Debug.Log(go.name);
+		}
 	}
 	
 	// Update is called once per frame
