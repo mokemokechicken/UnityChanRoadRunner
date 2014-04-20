@@ -7,7 +7,6 @@ public class BlockControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -15,7 +14,6 @@ public class BlockControl : MonoBehaviour {
 		if (disappearTimer > 0) {
 			disappearTimer--;
 		}
-		renderer.enabled = collider.enabled = disappearTimer == 0;
 	}
 
 	void HitGun() {
@@ -23,5 +21,7 @@ public class BlockControl : MonoBehaviour {
 			return;
 		}
 		disappearTimer = DISAPPEAR_TIMER_COUNT;
+		animation.Play("CubeBreaking");
 	}
+
 }
