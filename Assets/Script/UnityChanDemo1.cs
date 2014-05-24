@@ -14,8 +14,6 @@ public class UnityChanDemo1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		state.Tick();
-
 		// Moving
 		state.KeyLeftRight(Direction(Input.GetKey (KeyCode.LeftArrow), Input.GetKey (KeyCode.RightArrow)));
 		state.KeyUpDown(Direction(Input.GetKey(KeyCode.DownArrow), Input.GetKey(KeyCode.UpArrow)));
@@ -28,6 +26,8 @@ public class UnityChanDemo1 : MonoBehaviour {
 		animator.SetBool("on_bar", state.IsOnBar());
 		animator.SetBool("on_ladder", state.IsOnLadder());
 		animator.SetBool("is_falling", state.IsFalling());
+
+		state.Tick();
 	}
 
 	/**
@@ -43,6 +43,7 @@ public class UnityChanDemo1 : MonoBehaviour {
 	 */
 	public void MoveUpDown(int direction) {
 		transform.position += new Vector3(0, 0.05f * direction, 0);
+		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 	}
 
 	public void Shoot(int direct) {
@@ -65,6 +66,13 @@ public class UnityChanDemo1 : MonoBehaviour {
 
 	public void Freefall() {
 		rigidbody.useGravity = true;
+	}
+
+	public void GrapBar() {
+		transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+	}
+
+	public void GrapLadder() {
 	}
 
 	private bool canDestroyBlock(Transform block) {
@@ -137,8 +145,12 @@ class PlayerState {
 
 	//// Event 
 	public void Tick() {
-		if (IsGripping()) {
+		if (IsOnBar()) {
 			player.Grap();
+			player.GrapBar();
+		} else if (IsOnLadder()) {
+			player.Grap();
+			player.GrapLadder();
 		} else {
 			player.Freefall();
 		}
