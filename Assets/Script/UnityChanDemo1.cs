@@ -14,6 +14,12 @@ public class UnityChanDemo1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Global.paused) {
+			animator.SetBool("is_falling", true);
+			transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+			return;
+		}
+
 		// Moving
 		state.KeyLeftRight(Direction(Input.GetKey (KeyCode.LeftArrow), Input.GetKey (KeyCode.RightArrow)));
 		state.KeyUpDown(Direction(Input.GetKey(KeyCode.DownArrow), Input.GetKey(KeyCode.UpArrow)));
