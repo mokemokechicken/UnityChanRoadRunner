@@ -17,7 +17,7 @@ public class BaseCharacterControl : MonoBehaviour, ICharacterControl  {
 	/**
 	 * <param name="direction">-1:left or 1:right</param>
 	 */
-	public void MoveLeftRight(int direction) { 
+	virtual public void MoveLeftRight(int direction) { 
 		transform.position += new Vector3(moveSpeed * direction, 0, 0);
 		transform.rotation = Quaternion.Euler(new Vector3(0, 90*direction, 0));
 	}
@@ -25,31 +25,31 @@ public class BaseCharacterControl : MonoBehaviour, ICharacterControl  {
 	/**
 	 * <param name="direction">-1:left or 1:right</param>
 	 */
-	public void MoveUpDown(int direction) {
+	virtual public void MoveUpDown(int direction) {
 		transform.position += new Vector3(0, moveSpeed * direction, 0);
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 	}
 	
-	public void Shoot(int direct) {
+	virtual public void Shoot(int direct) {
 	}
 	
-	public void Grap() {
+	virtual public void Grap() {
 		rigidbody.useGravity = false;
 		rigidbody.velocity = Vector3.zero;
 	}
 	
-	public void Freefall() {
+	virtual public void Freefall() {
 		rigidbody.useGravity = true;
 	}
 	
-	public void GrapBar() {
+	virtual public void GrapBar() {
 		transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 	}
 	
-	public void GrapLadder() {
+	virtual public void GrapLadder() {
 	}
 	
-	public Rigidbody getRigidbody() {
+	virtual public Rigidbody getRigidbody() {
 		return rigidbody;
 	}
 	

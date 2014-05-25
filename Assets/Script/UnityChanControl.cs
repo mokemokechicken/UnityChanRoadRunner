@@ -33,7 +33,7 @@ public class UnityChanControl : BaseCharacterControl  {
 		state.Tick();
 	}
 
-	public void Shoot(int direct) {
+	override public void Shoot(int direct) {
 		RaycastHit hit;
 		Vector3 fromPos = transform.position+Vector3.up;
 		Vector3 direction = new Vector3(direct, -1, 0);

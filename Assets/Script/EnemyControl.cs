@@ -13,8 +13,8 @@ using System;
 
 public class EnemyControl : BaseCharacterControl
 {
+	// UnityChan
 	public Transform target;
-
 
 	// Use this for initialization
 	void Start () {
@@ -23,9 +23,13 @@ public class EnemyControl : BaseCharacterControl
 	}
 	
 	void Update() {
-		MoveLeftRight(Math.Sign(target.position.x - transform.position.x));
-	}
-	
-}
+		state.KeyLeftRight(Math.Sign(target.position.x - transform.position.x));
+		state.KeyUpDown(Math.Sign(target.position.y - transform.position.y));
 
+		animator.SetBool("isgrounded", !state.IsFalling());
+		animator.SetFloat("speed", state.IsMovingLeftRight() ? 0.3f : 0f);
+
+		state.Tick();
+	}
+}
 
