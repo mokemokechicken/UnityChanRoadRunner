@@ -14,4 +14,6 @@ public class Tag {
 	public const string BAR = "Bar";
 	public const string BLOCK = "Block";
 	public const string BEAM = "Beam";
+	public const string PLAYER = "Player";
+	public const string TREASURE = "Treasure";
 }

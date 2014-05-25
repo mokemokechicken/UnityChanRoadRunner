@@ -83,11 +83,11 @@ public class UnityChanDemo1 : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		state.OnTriggerEnter(other.gameObject.tag);
+		state.OnTriggerEnter(other.gameObject);
 	}
 
 	void OnTriggerExit(Collider other) {
-		state.OnTriggerExit(other.gameObject.tag);
+		state.OnTriggerExit(other.gameObject);
 	}
 
 	private int Direction(bool low, bool high) {
@@ -192,8 +192,8 @@ class PlayerState {
 		barEnter = 0;
 	}
 
-	public void OnTriggerEnter(string tag) {
-		switch(tag) {
+	public void OnTriggerEnter(GameObject go) {
+		switch(go.tag) {
 		case Tag.LADDER:
 			ladderEnter += 1;
 			break;
@@ -203,8 +203,8 @@ class PlayerState {
 		}
 	}
 
-	public void OnTriggerExit(string tag) {
-		switch(tag) {
+	public void OnTriggerExit(GameObject go) {
+		switch(go.tag) {
 		case Tag.LADDER:
 			ladderEnter -= 1;
 			break;
