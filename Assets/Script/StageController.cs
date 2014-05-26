@@ -11,6 +11,7 @@ public class StageController : MonoBehaviour {
 	public GameObject treasurePrefab;
 	public GameObject goalPrefab;
 	public GameObject cameraPrefab;
+	public GameObject enemyPrefab;
 
 	const char BLOCK = '#';
 	const char LADDER = 'H';
@@ -19,6 +20,7 @@ public class StageController : MonoBehaviour {
 	const char PLAYER = 'P';
 	const char TREASURE = '$';
 	const char GOAL = 'G';
+	const char ENEMY = 'E';
 
 	private GameObject playerObject;
 	private GameObject cameraObject;
@@ -26,6 +28,7 @@ public class StageController : MonoBehaviour {
 	private float loadNextAt;
 	private Dictionary<char, GameObject> prefabMap;
 	private List<GameObject> hiddenObjects;
+	private List<GameObject> enemyObjects;
 
 	// Use this for initialization
 	void Start () {
@@ -37,14 +40,22 @@ public class StageController : MonoBehaviour {
 			{PLAYER, playerPrefab},
 			{TREASURE, treasurePrefab},
 			{GOAL, goalPrefab},
+			{ENEMY, enemyPrefab},
 		};
 
 		BuildStage(STAGE_DATA);
-		// Camera
+
 		if (playerObject) {
+			// Camera
 			cameraObject = (GameObject)Instantiate(cameraPrefab);
 			var cameraScript = cameraObject.GetComponent<Camera>();
 			cameraScript.target = playerObject.transform;
+
+			// set target to EnemyControl
+			foreach (var enemyObject in enemyObjects) {
+				var enemyControl = enemyObject.GetComponent<EnemyControl>();
+				enemyControl.target = playerObject.transform;
+			}
 		}
 
 		Global.stageControler = this;
@@ -81,6 +92,7 @@ public class StageController : MonoBehaviour {
 	void BuildStage(string stageData) {
 		numTreasure = 0;
 		hiddenObjects = new List<GameObject>();
+		enemyObjects = new List<GameObject>();
 		// Left Botton's position is (0,0)
 		var lines = stageData.Split('\n');
 		int y = lines.Count();
@@ -104,6 +116,9 @@ public class StageController : MonoBehaviour {
 						instance.SetActive(false);
 						hiddenObjects.Add(instance);
 						break;
+					case ENEMY:
+						enemyObjects.Add (instance);
+						break;
 					}
 				}
 				x++;
@@ -114,7 +129,7 @@ public class StageController : MonoBehaviour {
 	const string STAGE_DATA = @"
 
 
-#         hhhhhG 
+#        EhhhhhG 
 #         H    #
 # P       H    #
 #         H    #
@@ -129,7 +144,7 @@ public class StageController : MonoBehaviour {
 #   H----      #
 #   H    ##### #
 #   H          #
-#   H          #
+#   H        E #
 ################";
 }
 
