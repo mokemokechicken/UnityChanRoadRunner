@@ -77,17 +77,18 @@ public class StageController : MonoBehaviour {
 		}
 	}
 
+	private void showGoal() {
+		foreach (var obj in hiddenObjects) {
+			obj.SetActive(true);
+		}
+	}
+
 	public void PlayerHitGoal() {
 		cameraObject.camera.fieldOfView = 40;
 		Global.paused = true;
 		loadNextAt = Time.time + 3;
 	}
 
-	private void showGoal() {
-		foreach (var obj in hiddenObjects) {
-			obj.SetActive(true);
-		}
-	}
 
 	void BuildStage(string stageData) {
 		numTreasure = 0;
