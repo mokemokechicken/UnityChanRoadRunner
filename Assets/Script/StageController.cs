@@ -32,6 +32,8 @@ public class StageController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Global.stageControler = this;
+
 		prefabMap = new Dictionary<char, GameObject> {
 			{BLOCK, blockPrefab},
 			{LADDER, ladderPrefab},
@@ -43,28 +45,34 @@ public class StageController : MonoBehaviour {
 			{ENEMY, enemyPrefab},
 		};
 
-		BuildStage(STAGE_DATA);
+		var model = StageModel.GetInstance();
+		StartCoroutine(model.LoadStageData(Global.stage, data => Build(data)));
 
+	}
+
+	void Build(string data) {
+		BuildStage(data);
+		
 		if (playerObject) {
 			// Camera
 			cameraObject = (GameObject)Instantiate(cameraPrefab);
 			var cameraScript = cameraObject.GetComponent<Camera>();
 			cameraScript.target = playerObject.transform;
-
+			
 			// set target to EnemyControl
 			foreach (var enemyObject in enemyObjects) {
 				var enemyControl = enemyObject.GetComponent<EnemyControl>();
 				enemyControl.target = playerObject.transform;
 			}
 		}
-
-		Global.stageControler = this;
+		
 		Global.paused = false;
 	}
 
 	void Update() {
 		if (Global.paused && loadNextAt < Time.time) {
 			Application.LoadLevel("Stage");
+			loadNextAt = float.MaxValue;
 		}
 	}
 
@@ -128,8 +136,6 @@ public class StageController : MonoBehaviour {
 	}
 
 	const string STAGE_DATA = @"
-
-
 #        EhhhhhG 
 #         H    #
 # P       H    #

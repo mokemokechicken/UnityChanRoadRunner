@@ -14,6 +14,7 @@ public static class Global
 	public static int stage = 1;
 	public static int score = 0;
 	public static bool paused = false;
+	public static string stageUrl = "http://mokemokechicken.github.io/UnityChanRoadRunnerStageData";
 
 	private static StageController stageController_;
 	public static StageController stageControler 
